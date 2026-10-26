@@ -115,7 +115,6 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 <header>
   <span class="eyebrow">Equity Research · Infraestructura de IA</span>
   <h1>Capex de los Hyperscalers: 2026 y perspectiva 2027</h1>
-  <p class="lede">Gasto de capital reportado por trimestre en 2026, guía de la administración para el año completo y lo que se sabe hoy sobre 2027 para Amazon, Microsoft, Alphabet, Meta, Oracle, Alibaba y Apple.</p>
   <div class="meta"><span>Datos al <b>26 de octubre de 2026</b></span><span>Cifras en <b>US$ miles de millones</b> (bn)</span><span>Fuente: reportes 8-K/10-Q/6-K, press releases y transcripts de cada empresa</span></div>
   <div class="status" id="status"></div>
 </header>
@@ -128,7 +127,6 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
     <div class="kpi"><span class="s">Reportado en 2026 a la fecha</span><span class="v num">US$336bn</span><span class="d">46% de la guía; Q3 solo de Meta</span></div>
     <div class="kpi"><span class="s">2027 estimado (sell-side)</span><span class="v num">≈US$975bn</span><span class="d up">≈+33% vs guía 2026</span></div>
   </div>
-  <p class="note">La guía de Microsoft (≈US$175bn) ya refleja la reclasificación de arrendamientos financieros a operativos; sin ese efecto contable sería ≈US$190bn y la suma subiría a ≈US$750bn. La estimación 2027 combina fuentes distintas (Citi para Amazon, consenso MarketScreener para Microsoft y Alphabet, consenso FactSet para Meta), por lo que debe leerse como orden de magnitud. Goldman Sachs (junio 2026) ubicaba el consenso 2027 del grupo en ≈US$920bn y su propia estimación en ≈US$1.1 billones (trillion).</p>
 </section>
 
 <section>
@@ -146,17 +144,21 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="toggle" role="group" aria-label="Empresas en la gráfica">
     <button type="button" id="t-big" aria-pressed="true">Big 4 + Oracle</button>
     <button type="button" id="t-all" aria-pressed="false">Todas</button>
+    <button type="button" id="t-sum" aria-pressed="false">Suma total</button>
   </div>
   <div class="chart"><div class="box"><canvas id="cq" aria-label="Capex trimestral 2025 y 2026 por empresa"></canvas></div>
-  <div class="legend-note"><span><i></i>Gasto reportado</span><span><i class="dash"></i>Proyección implícita en la guía</span></div>
-  <p class="note">La línea punteada reparte lo que falta de la guía 2026 entre los trimestres pendientes (Microsoft usa su guía de >US$50bn para jul–sep). Alibaba y Apple no dan guía, así que no tienen proyección. En esta gráfica Amazon se muestra con compras brutas de PP&amp;E, porque es la serie trimestral disponible para 2025; en la tabla se usa la cifra neta que reporta la administración. Oracle, Apple y Alibaba se ubican en el trimestre calendario más cercano a su trimestre fiscal.</p></div>
+  <div class="legend-note"><span><i></i>Gasto reportado</span><span><i class="dash"></i>Proyección implícita en la guía</span></div></div>
 </section>
 
 <section>
   <h2>Trayectoria anual: 2025 real → 2026 guía → 2027 estimado</h2>
+  <div class="toggle" role="group" aria-label="Vista de la gráfica anual">
+    <button type="button" id="y-co" aria-pressed="true">Por empresa</button>
+    <button type="button" id="y-sum" aria-pressed="false">Suma total</button>
+  </div>
   <div class="chart"><div class="box"><canvas id="cy" aria-label="Capex anual 2025, 2026 y 2027 por empresa"></canvas></div>
   <div class="legend-note"><span><i></i>Real</span><span><i class="dash"></i>Guía / estimación</span></div>
-  <p class="note">2026 = punto medio de la guía. 2027 = estimaciones de sell-side (Citi para Amazon, MarketScreener para Microsoft y Alphabet, FactSet para Meta); no son guía de las empresas. Oracle se grafica por año fiscal (FY26 real → FY27 guía) y no tiene estimación FY28 publicada.</p></div>
+  <p class="note">2026 = punto medio de la guía. 2027 = estimaciones de sell-side (Citi para Amazon, MarketScreener para Microsoft y Alphabet, FactSet para Meta); no son guía de las empresas. Oracle se grafica por año fiscal (FY26 real → FY27 guía) y no tiene estimación FY28 publicada. La suma total anual es del Big 4 (Amazon, Microsoft, Alphabet y Meta), las únicas con cifra para los tres años.</p></div>
 </section>
 
 <section>
@@ -169,20 +171,6 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 <section>
   <h2>Empresa por empresa</h2>
   <div class="cards" id="cards"></div>
-</section>
-
-<section>
-  <h2>Lectura del ciclo</h2>
-  <div class="themes">
-    <div class="theme"><h3>La guía 2026 solo ha subido</h3><p>Amazon pasó de ≈US$200bn a ≈US$220bn, Alphabet de US$175–185bn a US$195–205bn y Meta de US$115–135bn a US$135–145bn. Oracle terminó su FY26 en US$55.7bn tras arrancar con "más de US$25bn". El único recorte (Microsoft, de US$190bn a ≈US$175bn) es contable: el gasto real no cambió.</p></div>
-    <div class="theme"><h3>Parte del aumento es precio, no volumen</h3><p>Amazon atribuyó su alza a US$220bn al costo de la memoria. Microsoft dijo que ≈US$25bn de su capex 2026 viene de precios más altos de componentes, y Meta citó "higher expected component pricing" al subir su guía en abril. Más dólares no implican la misma proporción de capacidad adicional.</p></div>
-    <div class="theme"><h3>2027 crece, aunque más lento</h3><p>Alphabet ya dijo que su capex 2027 "aumentará significativamente". Microsoft espera que su FY27 crezca año contra año, y Amazon dice que en 2027 seguirá sin capacidad suficiente para la demanda. Meta dará cifras en su reporte de Q4. El consenso implica ≈+30% después de ≈+80% en 2026.</p></div>
-    <div class="theme"><h3>El flujo libre se volvió negativo</h3><p>Alphabet tuvo FCF negativo en Q2 2026 (−US$5.9bn), el primero en ≈22 años. Meta lo tuvo en Q3 (−US$2.1bn), el primero desde 2012. Amazon acumula −US$7.6bn en doce meses a junio. Oracle y Alibaba llevan varios trimestres en negativo. El capex ya rebasa el flujo operativo.</p></div>
-    <div class="theme"><h3>Financiamiento: deuda, JVs y acciones</h3><p>Amazon emitió más de US$75bn en bonos y créditos en 2026. Meta colocó US$25bn en bonos, usa JVs fuera de balance (Hyperion con Blue Owl) y creó una nueva clase de acciones sin voto. Oracle levantó US$43bn de deuda y US$5bn de capital en FY26 más ≈US$20bn vía ATM. Alibaba colocó HK$80bn en acciones.</p></div>
-    <div class="theme"><h3>Backlog que respalda el gasto</h3><p>Los backlogs de nube rondan el medio billón de dólares cada uno: Microsoft US$678bn de RPO comercial, Oracle US$664bn, Alphabet US$514bn y AWS US$496bn. La concentración en pocos clientes (OpenAI, Anthropic) es el principal riesgo: Microsoft dice que su RPO crece 25% sin OpenAI, y ≈la mitad del de Oracle estaría ligado a OpenAI.</p></div>
-    <div class="theme"><h3>Mezcla: servidores de vida corta</h3><p>≈2/3 del capex de Microsoft y ≈60% del de Alphabet se va a servidores, CPUs y GPUs. El resto se va a data centers y red. Eso acelera la depreciación: la de Alphabet subió ≈42% en Q2 y la de Meta ≈48% en 9M. Microsoft extendió de 15 a 25 años la vida útil de sus edificios.</p></div>
-    <div class="theme"><h3>Apple, la excepción</h3><p>Apple no es un hyperscaler. Su capex de 9M FY26 cae 28% (US$6.8bn vs US$9.5bn), porque combina Private Cloud Compute con capacidad de terceros (Gemini de Google). Su gasto en IA va mayormente a opex. Sirve como contraste: es el modelo de "rentar" contra el de "construir".</p></div>
-  </div>
 </section>
 
 <section>
@@ -207,6 +195,7 @@ footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padd
 </section>
 
 <footer>
+  <p><b>Nota sobre las gráficas trimestrales:</b> La línea punteada reparte lo que falta de la guía 2026 entre los trimestres pendientes (Microsoft usa su guía de >US$50bn para jul–sep). Alibaba y Apple no dan guía, así que no tienen proyección. En esta gráfica Amazon se muestra con compras brutas de PP&amp;E, porque es la serie trimestral disponible para 2025; en la tabla se usa la cifra neta que reporta la administración. Oracle, Apple y Alibaba se ubican en el trimestre calendario más cercano a su trimestre fiscal. En la suma total, los trimestres pendientes de Alibaba y Apple (que no dan guía) se proyectan con su último trimestre reportado.</p>
   <p>Las cifras de un solo trimestre de Apple se derivan restando acumulados (Apple reporta acumulado anual en flujo de efectivo). El capex 2025 de Microsoft incluyendo arrendamientos (≈US$118bn) es la suma de sus trimestres calendario reportados. El consenso 2027 de Microsoft puede referirse a año fiscal. Los números marcados como estimación provienen de terceros y no son guía de las empresas.</p>
   <p>Documento informativo. No constituye recomendación de inversión.</p>
 </footer>
@@ -381,7 +370,7 @@ const TR = {
    txt:"Gasta menos que el año pasado: su acumulado FY26 va 28% abajo de FY25."}
 };
 
-const charts=[]; let mode="big";
+const charts=[]; let mode="big", ymode="co";
 function mk(el,cfg){const ch=new Chart(el,cfg);charts.push(ch);return ch;}
 function hexA(h,a){h=h.replace('#','');const n=parseInt(h,16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
 function base(yt){
@@ -416,16 +405,41 @@ function draw(){
   const set=C.filter(c=> mode==="all" ? true : (c.big||c.mid));
   const o1=base("US$ bn por trimestre");
   o1.plugins.legend={display:true,position:"bottom",labels:{color:fg,usePointStyle:true,boxWidth:10,filter:i=>!i.text.includes("(proyección)")}};
-  mk(document.getElementById("cq"),{type:"line",data:{labels:QL,datasets:set.flatMap(c=>qSets(c))},options:o1});
+  let qds;
+  if(mode==="sum"){
+    const act=Array(8).fill(0), prj=Array(8).fill(0); let lastFull=-1;
+    for(let i=0;i<8;i++){
+      const vals=C.map(c=>[...c.q25,...(c.qc||c.q),null][i]);
+      if(vals.every(v=>v!=null)){act[i]=vals.reduce((a,b)=>a+b,0); lastFull=i;}
+    }
+    const actD=act.map((v,i)=>i<=lastFull?+v.toFixed(1):null);
+    const prjD=Array(8).fill(null); prjD[lastFull]=actD[lastFull];
+    for(let i=lastFull+1;i<8;i++){
+      prjD[i]=+C.reduce((a,c)=>{const s=[...c.q25,...(c.qc||c.q),null]; const p=PROJ[c.id];
+        if(s[i]!=null) return a+s[i];
+        if(p && p[i-6]!=null) return a+p[i-6];
+        let k=i; while(k>0&&s[k]==null) k--; return a+s[k];},0).toFixed(1);
+    }
+    const col=css("--fg");
+    qds=[{label:"Suma total (7 empresas)",data:actD,borderColor:col,backgroundColor:col,borderWidth:3,pointRadius:4,tension:.25},
+         {label:"Suma total (proyección)",data:prjD,borderColor:col,backgroundColor:css("--surface"),borderDash:[6,5],borderWidth:2.5,pointRadius:4,tension:.25}];
+  } else qds=set.flatMap(c=>qSets(c));
+  mk(document.getElementById("cq"),{type:"line",data:{labels:QL,datasets:qds},options:o1});
   // 2) annual trajectory
   const ys=C.filter(c=>c.big||c.mid);
   const o2=base("US$ bn por año");
   o2.plugins.legend={display:true,position:"bottom",labels:{color:fg,usePointStyle:true,boxWidth:10,filter:i=>!i.text.includes("(guía)")}};
+  const big=C.filter(c=>c.big), fgc=css("--fg");
+  const sum3=[0,1,2].map(i=>+big.reduce((a,c)=>a+[c.y25,c.g26,c.e27][i],0).toFixed(1));
   mk(document.getElementById("cy"),{type:"line",data:{labels:["2025 real","2026 guía","2027 estimado"],
-    datasets:ys.flatMap(c=>{const col=css(c.c);return[
+    datasets: ymode==="sum" ? [
+      {label:"Suma Big 4",data:[sum3[0],null,null],borderColor:fgc,backgroundColor:fgc,pointRadius:6,borderWidth:3},
+      {label:"Suma Big 4 (guía)",data:sum3,borderColor:fgc,backgroundColor:fgc,borderDash:[6,5],borderWidth:3,pointRadius:6}
+    ] : ys.flatMap(c=>{const col=css(c.c);return[
       {label:c.name,data:[c.y25,null,null],borderColor:col,backgroundColor:col,pointStyle:c.ps,pointRadius:5,borderWidth:2.5},
       {label:c.name+" (guía)",data:[c.y25,c.g26,c.e27],borderColor:col,backgroundColor:col,borderDash:[6,5],borderWidth:2.5,pointStyle:c.ps,pointRadius:5,_hide:false}
     ]})},options:o2});
+  if(ymode==="sum"){ const ch=charts[charts.length-1]; ch.options.plugins.tooltip.callbacks.afterLabel=x=>x.dataIndex>0?`${x.dataIndex===1?"+":"+"}${((sum3[x.dataIndex]/sum3[x.dataIndex-1]-1)*100).toFixed(0)}% vs año anterior`:""; ch.update(); }
   // 3) per company
   C.forEach(c=>{
     const t=TR[c.id], col=css(c.c);
@@ -482,9 +496,13 @@ document.getElementById("traj").innerHTML = C.map(c=>{
    </div></div>`;
 }).join("");
 
-function setMode(m){mode=m;document.getElementById("t-big").setAttribute("aria-pressed",m==="big");document.getElementById("t-all").setAttribute("aria-pressed",m==="all");draw();}
+function setMode(m){mode=m;[["t-big","big"],["t-all","all"],["t-sum","sum"]].forEach(([id,v])=>document.getElementById(id).setAttribute("aria-pressed",m===v));draw();}
+function setY(m){ymode=m;document.getElementById("y-co").setAttribute("aria-pressed",m==="co");document.getElementById("y-sum").setAttribute("aria-pressed",m==="sum");draw();}
 document.getElementById("t-big").onclick=()=>setMode("big");
 document.getElementById("t-all").onclick=()=>setMode("all");
+document.getElementById("t-sum").onclick=()=>setMode("sum");
+document.getElementById("y-co").onclick=()=>setY("co");
+document.getElementById("y-sum").onclick=()=>setY("sum");
 draw();
 const mq = matchMedia("(prefers-color-scheme: dark)");
 mq.addEventListener && mq.addEventListener("change",draw);
