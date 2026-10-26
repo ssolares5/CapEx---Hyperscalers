@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capex Hyperscalers 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,500..800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: informe de research de una columna (max 1080px); tablas y gráficas a ancho completo, notas debajo de cada dato. */
+:root{
+  --bg:#f5f7f8; --surface:#ffffff; --fg:#14202a; --muted:#5b6b78; --line:#d9e1e6;
+  --accent:#0d5c7a; --accent-soft:#e3eff4; --pending:#9a6a00; --pending-soft:#fbf1d9;
+  --good:#1d7a4a; --bad:#b4372f;
+  --c1:#0d5c7a; --c2:#d0782a; --c3:#5a8f3a; --c4:#7b5aa6; --c5:#8a8f96; --c6:#b8434d; --c7:#c9a227;
+  --amzn:#FF9900; --msft:#00A4EF; --googl:#34A853; --meta:#0866FF; --orcl:#C74634; --baba:#FF6A00; --aapl:#555555;
+  --display:"Archivo",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f161c; --surface:#16212a; --fg:#e4ebf0; --muted:#93a4b1; --line:#2a3945;
+  --accent:#5fb4d6; --accent-soft:#16303d; --pending:#e5b54a; --pending-soft:#3a2f14;
+  --good:#5cc48c; --bad:#ec7d73;
+  --c1:#5fb4d6; --c2:#ec9a52; --c3:#8cc46a; --c4:#ab8bd8; --c5:#a9b0b8; --c6:#e7737c; --c7:#e5c252;
+  --meta:#3D8BFF; --orcl:#E0605A; --aapl:#A2AAAD; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161c; --surface:#16212a; --fg:#e4ebf0; --muted:#93a4b1; --line:#2a3945;
+  --accent:#5fb4d6; --accent-soft:#16303d; --pending:#e5b54a; --pending-soft:#3a2f14;
+  --good:#5cc48c; --bad:#ec7d73;
+  --c1:#5fb4d6; --c2:#ec9a52; --c3:#8cc46a; --c4:#ab8bd8; --c5:#a9b0b8; --c6:#e7737c; --c7:#e5c252;
+  --meta:#3D8BFF; --orcl:#E0605A; --aapl:#A2AAAD; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800;font-stretch:88%;letter-spacing:-.01em}
+h2{font-size:1.55rem;font-weight:750;font-stretch:92%}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0;max-width:72ch}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+section{display:flex;flex-direction:column;gap:16px}
+.lede{font-size:1.1rem;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:14px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:.95rem}
+.status{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip.ok i{background:var(--good)} .chip.wait i{background:var(--pending)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.kpi .v{font-family:var(--display);font-size:2rem;font-weight:800;font-stretch:90%;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:.85rem;color:var(--muted)}
+.kpi .d{font-size:.85rem;font-family:var(--mono)}
+.up{color:var(--good)} .down{color:var(--bad)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--bg)}
+tbody tr:last-child td{border-bottom:0}
+td .fq{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+td.pend{color:var(--pending)}
+td.pend span{background:var(--pending-soft);padding:2px 7px;border-radius:4px;font-size:.8rem;white-space:nowrap}
+tr.total td{font-weight:600;background:var(--accent-soft)}
+.co{display:flex;align-items:center;gap:8px;font-weight:600}
+.sw{width:10px;height:10px;border-radius:2px;flex:none}
+.note{font-size:.85rem;color:var(--muted)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;position:relative}
+.chart .box{position:relative;height:360px}
+.toggle{display:flex;gap:6px;flex-wrap:wrap}
+.toggle button{font:inherit;font-size:.85rem;padding:4px 12px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.traj{display:flex;flex-direction:column;gap:20px}
+.trow{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.trow-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
+.trow-h p{font-size:.9rem;color:var(--muted)}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.pair figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pair figcaption{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pair .box{position:relative;height:250px}
+.legend-note{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.82rem;color:var(--muted)}
+.legend-note span{display:inline-flex;align-items:center;gap:6px}
+.legend-note i{display:inline-block;width:22px;height:0;border-top:2px solid var(--muted)}
+.legend-note i.dash{border-top-style:dashed}
+.legend-note i.band{height:10px;border:0;background:var(--line)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card header{flex-direction:row;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.card dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;font-size:.9rem}
+.card dt{color:var(--muted)} .card dd{margin:0;text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.card ul{margin:0;padding-left:18px;font-size:.92rem;display:flex;flex-direction:column;gap:4px}
+.ladder{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-family:var(--mono);font-size:.8rem}
+.ladder span{padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--line)}
+.ladder span:last-child{background:var(--accent-soft);border-color:var(--accent);font-weight:600}
+.ladder b{color:var(--muted);font-weight:400}
+blockquote{margin:0;padding-left:12px;border-left:2px solid var(--line);font-style:italic;color:var(--muted);font-size:.9rem}
+.themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px 28px}
+.theme{display:flex;flex-direction:column;gap:6px}
+.theme h3{font-size:1.05rem}
+.theme p{font-size:.95rem}
+.src{font-size:.85rem;columns:2 320px;column-gap:28px}
+.src li{break-inside:avoid;margin-bottom:6px}
+footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Equity Research · Infraestructura de IA</span>
+  <h1>Capex de los Hyperscalers: 2026 y perspectiva 2027</h1>
+  <p class="lede">Gasto de capital reportado por trimestre en 2026, guía de la administración para el año completo y lo que se sabe hoy sobre 2027 para Amazon, Microsoft, Alphabet, Meta, Oracle, Alibaba y Apple.</p>
+  <div class="meta"><span>Datos al <b>26 de octubre de 2026</b></span><span>Cifras en <b>US$ miles de millones</b> (bn)</span><span>Fuente: reportes 8-K/10-Q/6-K, press releases y transcripts de cada empresa</span></div>
+  <div class="status" id="status"></div>
+</header>
+
+<section>
+  <span class="eyebrow">Resumen · Big 4 (Amazon, Microsoft, Alphabet, Meta)</span>
+  <div class="kpis">
+    <div class="kpi"><span class="s">Capex 2025 (real)</span><span class="v num">US$410bn</span><span class="d">base de comparación</span></div>
+    <div class="kpi"><span class="s">Guía 2026 (suma de puntos medios)</span><span class="v num">US$735bn</span><span class="d up">+79% vs 2025</span></div>
+    <div class="kpi"><span class="s">Reportado en 2026 a la fecha</span><span class="v num">US$336bn</span><span class="d">46% de la guía; Q3 solo de Meta</span></div>
+    <div class="kpi"><span class="s">2027 estimado (sell-side)</span><span class="v num">≈US$975bn</span><span class="d up">≈+33% vs guía 2026</span></div>
+  </div>
+  <p class="note">La guía de Microsoft (≈US$175bn) ya refleja la reclasificación de arrendamientos financieros a operativos; sin ese efecto contable sería ≈US$190bn y la suma subiría a ≈US$750bn. La estimación 2027 combina fuentes distintas (Citi para Amazon, consenso MarketScreener para Microsoft y Alphabet, consenso FactSet para Meta), por lo que debe leerse como orden de magnitud. Goldman Sachs (junio 2026) ubicaba el consenso 2027 del grupo en ≈US$920bn y su propia estimación en ≈US$1.1 billones (trillion).</p>
+</section>
+
+<section>
+  <h2>Capex trimestral 2026</h2>
+  <p>Trimestres calendario. Para Microsoft, Oracle, Apple y Alibaba, que tienen años fiscales distintos, se indica el trimestre fiscal equivalente. Oracle reporta trimestres desfasados un mes (dic–feb, mar–may, jun–ago).</p>
+  <div class="tbl"><table id="qtable">
+    <thead><tr><th>Empresa</th><th>Q1 2026</th><th>Q2 2026</th><th>Q3 2026</th><th>2026 YTD</th><th>2025 real</th><th>Guía 2026</th><th>2027</th></tr></thead>
+    <tbody></tbody>
+  </table></div>
+  <p class="note">Definiciones: Amazon = "cash capex" (compras de PP&amp;E netas de ventas e incentivos, la cifra que da la administración). Microsoft = capex incluyendo arrendamientos financieros. Alphabet y Apple = compras de PP&amp;E. Meta = capex incluyendo pagos de principal de arrendamientos financieros. Oracle = capital expenditures del reporte (bruto). Alibaba = capex convertido al tipo de cambio de cada reporte. Para Oracle, Apple y Alibaba la columna 2025 y la guía son de año fiscal.</p>
+</section>
+
+<section>
+  <h2>Ritmo trimestral</h2>
+  <div class="toggle" role="group" aria-label="Empresas en la gráfica">
+    <button type="button" id="t-big" aria-pressed="true">Big 4 + Oracle</button>
+    <button type="button" id="t-all" aria-pressed="false">Todas</button>
+  </div>
+  <div class="chart"><div class="box"><canvas id="cq" aria-label="Capex trimestral 2025 y 2026 por empresa"></canvas></div>
+  <div class="legend-note"><span><i></i>Gasto reportado</span><span><i class="dash"></i>Proyección implícita en la guía</span></div>
+  <p class="note">La línea punteada reparte lo que falta de la guía 2026 entre los trimestres pendientes (Microsoft usa su guía de >US$50bn para jul–sep). Alibaba y Apple no dan guía, así que no tienen proyección. En esta gráfica Amazon se muestra con compras brutas de PP&amp;E, porque es la serie trimestral disponible para 2025; en la tabla se usa la cifra neta que reporta la administración. Oracle, Apple y Alibaba se ubican en el trimestre calendario más cercano a su trimestre fiscal.</p></div>
+</section>
+
+<section>
+  <h2>Trayectoria anual: 2025 real → 2026 guía → 2027 estimado</h2>
+  <div class="chart"><div class="box"><canvas id="cy" aria-label="Capex anual 2025, 2026 y 2027 por empresa"></canvas></div>
+  <div class="legend-note"><span><i></i>Real</span><span><i class="dash"></i>Guía / estimación</span></div>
+  <p class="note">2026 = punto medio de la guía. 2027 = estimaciones de sell-side (Citi para Amazon, MarketScreener para Microsoft y Alphabet, FactSet para Meta); no son guía de las empresas. Oracle se grafica por año fiscal (FY26 real → FY27 guía) y no tiene estimación FY28 publicada.</p></div>
+</section>
+
+<section>
+  <h2>Cómo se movió cada empresa</h2>
+  <p>Por empresa, a la izquierda el gasto trimestral (real y proyectado) y a la derecha cómo cambió su guía a lo largo del año, con la fecha de cada llamada. Cada línea usa el color de la marca. Google aparece en su verde para distinguirlo de Microsoft y Meta, que también usan azul.</p>
+  <div class="legend-note"><span><i></i>Real / punto medio de la guía</span><span><i class="dash"></i>Proyección o referencia</span><span><i class="band"></i>Rango de la guía</span></div>
+  <div class="traj" id="traj"></div>
+</section>
+
+<section>
+  <h2>Empresa por empresa</h2>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section>
+  <h2>Lectura del ciclo</h2>
+  <div class="themes">
+    <div class="theme"><h3>La guía 2026 solo ha subido</h3><p>Amazon pasó de ≈US$200bn a ≈US$220bn, Alphabet de US$175–185bn a US$195–205bn y Meta de US$115–135bn a US$135–145bn. Oracle terminó su FY26 en US$55.7bn tras arrancar con "más de US$25bn". El único recorte (Microsoft, de US$190bn a ≈US$175bn) es contable: el gasto real no cambió.</p></div>
+    <div class="theme"><h3>Parte del aumento es precio, no volumen</h3><p>Amazon atribuyó su alza a US$220bn al costo de la memoria. Microsoft dijo que ≈US$25bn de su capex 2026 viene de precios más altos de componentes, y Meta citó "higher expected component pricing" al subir su guía en abril. Más dólares no implican la misma proporción de capacidad adicional.</p></div>
+    <div class="theme"><h3>2027 crece, aunque más lento</h3><p>Alphabet ya dijo que su capex 2027 "aumentará significativamente". Microsoft espera que su FY27 crezca año contra año, y Amazon dice que en 2027 seguirá sin capacidad suficiente para la demanda. Meta dará cifras en su reporte de Q4. El consenso implica ≈+30% después de ≈+80% en 2026.</p></div>
+    <div class="theme"><h3>El flujo libre se volvió negativo</h3><p>Alphabet tuvo FCF negativo en Q2 2026 (−US$5.9bn), el primero en ≈22 años. Meta lo tuvo en Q3 (−US$2.1bn), el primero desde 2012. Amazon acumula −US$7.6bn en doce meses a junio. Oracle y Alibaba llevan varios trimestres en negativo. El capex ya rebasa el flujo operativo.</p></div>
+    <div class="theme"><h3>Financiamiento: deuda, JVs y acciones</h3><p>Amazon emitió más de US$75bn en bonos y créditos en 2026. Meta colocó US$25bn en bonos, usa JVs fuera de balance (Hyperion con Blue Owl) y creó una nueva clase de acciones sin voto. Oracle levantó US$43bn de deuda y US$5bn de capital en FY26 más ≈US$20bn vía ATM. Alibaba colocó HK$80bn en acciones.</p></div>
+    <div class="theme"><h3>Backlog que respalda el gasto</h3><p>Los backlogs de nube rondan el medio billón de dólares cada uno: Microsoft US$678bn de RPO comercial, Oracle US$664bn, Alphabet US$514bn y AWS US$496bn. La concentración en pocos clientes (OpenAI, Anthropic) es el principal riesgo: Microsoft dice que su RPO crece 25% sin OpenAI, y ≈la mitad del de Oracle estaría ligado a OpenAI.</p></div>
+    <div class="theme"><h3>Mezcla: servidores de vida corta</h3><p>≈2/3 del capex de Microsoft y ≈60% del de Alphabet se va a servidores, CPUs y GPUs. El resto se va a data centers y red. Eso acelera la depreciación: la de Alphabet subió ≈42% en Q2 y la de Meta ≈48% en 9M. Microsoft extendió de 15 a 25 años la vida útil de sus edificios.</p></div>
+    <div class="theme"><h3>Apple, la excepción</h3><p>Apple no es un hyperscaler. Su capex de 9M FY26 cae 28% (US$6.8bn vs US$9.5bn), porque combina Private Cloud Compute con capacidad de terceros (Gemini de Google). Su gasto en IA va mayormente a opex. Sirve como contraste: es el modelo de "rentar" contra el de "construir".</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Próximos reportes</h2>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Empresa</th><th>Periodo</th><th>Fecha</th><th>Qué vigilar</th></tr></thead>
+    <tbody>
+      <tr><td>Microsoft</td><td>FY27 Q1 (jul–sep)</td><td class="num">28 oct 2026</td><td>Guía de >US$50bn para el trimestre; primera cifra FY27</td></tr>
+      <tr><td>Alphabet</td><td>Q3 2026</td><td class="num">28 oct 2026</td><td>Si mantiene o sube US$195–205bn; detalle 2027</td></tr>
+      <tr><td>Amazon</td><td>Q3 2026</td><td class="num">29 oct 2026</td><td>Ritmo implícito de ≈US$62bn por trimestre en 2S26</td></tr>
+      <tr><td>Apple</td><td>FY26 Q4 (jul–sep)</td><td class="num">2 nov 2026</td><td>Capex FY26 completo; comentario sobre data centers</td></tr>
+      <tr><td>Alibaba</td><td>Trimestre de septiembre</td><td class="num">finales nov (estimado)</td><td>Si repite el salto de capex de junio (RMB 67.7bn)</td></tr>
+      <tr><td>Oracle</td><td>FY27 Q2 (sep–nov)</td><td class="num">mediados dic (estimado)</td><td>Si mantiene US$90–95bn brutos / ≤US$70bn netos</td></tr>
+      <tr><td>Meta</td><td>Q4 2026</td><td class="num">finales ene 2027</td><td>Primera guía de capex 2027</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Fuentes</h2>
+  <ul class="src" id="sources"></ul>
+</section>
+
+<footer>
+  <p>Las cifras de un solo trimestre de Apple se derivan restando acumulados (Apple reporta acumulado anual en flujo de efectivo). El capex 2025 de Microsoft incluyendo arrendamientos (≈US$118bn) es la suma de sus trimestres calendario reportados. El consenso 2027 de Microsoft puede referirse a año fiscal. Los números marcados como estimación provienen de terceros y no son guía de las empresas.</p>
+  <p>Documento informativo. No constituye recomendación de inversión.</p>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const P = null; // pendiente
+const C = [
+ {id:"amzn",name:"Amazon",c:"--amzn",big:true,
+  q:[43.2,53.1,P], fq:["","",""], pend:"29 oct",
+  y25:128.3, y25l:"2025", g26:220, g26l:"≈220", e27:288, e27l:"288 (Citi)",
+  q25:[25.0,32.2,35.1,39.5], qc:[44.2,54.2,P],
+  ladder:["≈200 (feb)","≈220 (jul)"],
+  dl:[["Guía 2026","≈US$220bn"],["Crecimiento vs 2025","+71%"],["Implícito 2S26","≈US$124bn"],["Backlog AWS","US$496bn"],["FCF 12m (jun-26)","−US$7.6bn"]],
+  pts:["AWS creció 37% en Q2 2026 (el ritmo más alto en 18 trimestres), con un run-rate de US$169bn.","El alza de la guía a US$220bn se atribuye al costo de la memoria, no a más obra.","Espera duplicar su capacidad eléctrica a finales de 2027 frente a 2025."],
+  q27:"\"I believe this dynamic will also be true in 2027, too\" — Andy Jassy, sobre no tener capacidad suficiente para la demanda (Q2 2026)."},
+ {id:"msft",name:"Microsoft",c:"--msft",big:true,
+  q:[31.9,41.0,P], fq:["FY26 Q3","FY26 Q4","FY27 Q1"], pend:"28 oct",
+  y25:118.0, y25l:"≈118 (CY)", g26:175, g26l:"≈175 (CY)", e27:207.6, e27l:"≈208 (cons.)",
+  q25:[21.4,24.2,34.9,37.5],
+  ladder:["≈190 CY26 (abr)","≈175 CY26 (jul, efecto contable)"],
+  dl:[["Guía CY2026","≈US$175bn"],["Guía FY27 Q1 (jul–sep)",">US$50bn"],["RPO comercial","US$678bn (+84%)"],["Activos de vida corta","≈2/3 del capex"],["Efecto precio componentes","≈US$25bn"]],
+  pts:["De US$190bn a ≈US$175bn: los arrendamientos de data centers pasan de financieros a operativos al extender su vida útil de 15 a 25 años. El gasto planeado no cambia.","Capex en efectivo FY26 (jul-25 a jun-26): US$115.9bn vs US$64.6bn en FY25.","Espera seguir con restricción de capacidad al menos durante 2026."],
+  q27:"\"We expect FY27 capital expenditures will grow year-over-year given demand signals across our portfolio\" — Amy Hood (jul 2026)."},
+ {id:"googl",name:"Alphabet",c:"--googl",big:true,
+  q:[35.7,44.9,P], fq:["","",""], pend:"28 oct",
+  y25:91.4, y25l:"91.4", g26:200, g26l:"195–205", e27:284.8, e27l:"≈285 (cons.)",
+  q25:[17.2,22.4,24.0,27.9],
+  ladder:["175–185 (feb)","180–190 (abr)","195–205 (jul)"],
+  dl:[["Guía 2026","US$195–205bn"],["Crecimiento vs 2025","≈+119%"],["Backlog Google Cloud","US$514bn"],["Servidores / DC y red","≈60% / 40%"],["FCF Q2 2026","−US$5.9bn"]],
+  pts:["Es el aumento porcentual más grande del grupo: más que duplica el capex de 2025.","Google Cloud creció 82% en Q2 2026, con una utilidad operativa de US$8.8bn.","Sigue en un entorno de oferta restringida (\"supply-constrained\")."],
+  q27:"\"We continue to expect our CapEx to increase significantly in 2027\" — Alphabet, llamada de Q2 2026."},
+ {id:"meta",name:"Meta",c:"--meta",big:true,
+  q:[19.8,31.1,34.9], fq:["","",""], pend:"",
+  y25:72.2, y25l:"72.2", g26:140, g26l:"135–145", e27:196.3, e27l:"≈196 (FactSet)",
+  q25:[13.7,17.0,19.4,22.1],
+  ladder:["115–135 (ene)","125–145 (abr)","130–145 (jul)","135–145 (oct)"],
+  dl:[["Guía 2026","US$135–145bn"],["Q3 2026 vs Q3 2025","+80%"],["Implícito Q4 2026","≈US$49–59bn"],["Estimaciones 2027","US$196–250bn"],["FCF Q3 2026","−US$2.1bn"]],
+  pts:["Es la única del Big 4 que ya reportó Q3 2026 (21 de octubre).","Usa JVs fuera de balance (Hyperion en Luisiana con Blue Owl por ≈US$27bn y otra en Texas por ≈US$14bn), con garantías de valor residual de US$41.5bn.","Compromisos de arrendamientos aún no iniciados por ≈US$356bn; no ha recomprado acciones en 2026."],
+  q27:"\"We are still developing our budget and capacity plans for next year\" — Susan Li (Q3 2026). Estimaciones 2027: FactSet US$196bn, Citi US$205bn, Wells Fargo ≈US$250bn."},
+ {id:"orcl",name:"Oracle",c:"--orcl",big:false,mid:true,
+  q:[18.6,16.5,28.5], fq:["FY26 Q3 dic–feb","FY26 Q4 mar–may","FY27 Q1 jun–ago"], pend:"",
+  y25:55.7, y25l:"55.7 (FY26)", g26:92.5, g26l:"90–95 (FY27)", e27:null, e27l:"FY27–28 pico*",
+  q25:[5.9,9.1,8.5,12.0],
+  ladder:[">25 FY26 (jun-25)","≈35 (sep)","≈50 (dic)","55.7 real","90–95 FY27"],
+  dl:[["Guía FY27 (jun-26 a may-27)","US$90–95bn"],["Neto de prepagos","≤US$70bn"],["RPO","US$664bn"],["FCF FY26","−US$23.7bn"],["Deuda total","US$125bn"]],
+  pts:["El capex FY27 es ≈1.7x el de FY26; ≈US$75bn de hardware prepagado o aportado por clientes reduce el capital que necesita levantar.","OCI creció 121% en Q1 FY27. Cerca de la mitad del RPO estaría ligada a OpenAI (estimación de prensa).","No planea emitir más deuda en el año calendario 2026."],
+  q27:"*Un analista de Deutsche Bank dijo en la llamada que la administración les había dicho que FY27 y FY28 son los años pico de capex (caracterización del analista, no cita de Oracle)."},
+ {id:"baba",name:"Alibaba",c:"--baba",big:false,
+  q:[3.9,10.0,P], fq:["FY26 Q4","FY27 Q1","FY27 Q2"], pend:"fin nov",
+  y25:18.3, y25l:"18.3 (FY26)", g26:null, g26l:">RMB 380bn 2025–27", e27:null, e27l:"sin guía",
+  q25:[3.4,5.4,4.4,4.1],
+  ladder:["RMB 380bn / 3 años (feb-25)","\"superará\" (may-26)"],
+  dl:[["Q2 2026 (abr–jun)","RMB 67.7bn (+75%)"],["FY26 (abr-25 a mar-26)","RMB 126.1bn"],["Desplegado a jun-26","≈RMB 190bn"],["Nube IA (abr–jun)","+45%"],["FCF abr–jun","−US$6.6bn"]],
+  pts:["Dijo que superará su compromiso de RMB 380bn para 2025–2027, sin dar una cifra nueva.","Espera escasez de cómputo en China \"hasta al menos 2030\"; desarrolla chips propios (T-Head).","Colocó HK$80bn (≈US$10.2bn) en acciones en agosto de 2026 para financiar IA y data centers."],
+  q27:"\"I don't think we should take the spending for this quarter and multiply it by four\" — administración, agosto 2026."},
+ {id:"aapl",name:"Apple",c:"--aapl",big:false,
+  q:[2.0,2.5,P], fq:["FY26 Q2","FY26 Q3","FY26 Q4"], pend:"2 nov",
+  y25:12.7, y25l:"12.7 (FY25)", g26:null, g26l:"sin guía", e27:null, e27l:"sin guía",
+  q25:[3.1,3.5,3.2,2.4],
+  ladder:["sin guía formal"],
+  dl:[["9M FY26","US$6.8bn (−28%)"],["FY25","US$12.7bn"],["Compromiso EE.UU. (4 años)","US$600bn"],["Modelo","híbrido propio + terceros"]],
+  pts:["No es un hyperscaler: no vende nube y renta o se asocia para cómputo de modelos (acuerdo multianual con Google Gemini, ene-2026).","Su gasto en IA va mayormente a opex y pagos a socios.","Construye data centers en Carolina del Norte, Iowa, Nevada y Oregon, y una fábrica de servidores de IA en Houston."],
+  q27:"Tim Cook (jul 2026): gastan \"quite a bit more\" en IA, en buena parte vía opex."}
+];
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const f1 = v => v==null ? "—" : v.toFixed(1);
+
+// status chips
+document.getElementById("status").innerHTML = C.map(c=>{
+  const ok = c.q[2]!=null;
+  return `<span class="chip ${ok?"ok":"wait"}"><i></i>${c.name}: ${ok?"Q3 reportado":"Q3 pendiente · "+c.pend}</span>`;
+}).join("");
+
+// table
+const tb = document.querySelector("#qtable tbody");
+let tot={q1:0,q2:0,ytd:0,y25:0,g26:0};
+tb.innerHTML = C.map(c=>{
+  const cells = c.q.map((v,i)=> v==null
+     ? `<td class="pend"><span>Pendiente · ${c.pend}</span>${c.fq[i]?`<span class="fq">${c.fq[i]}</span>`:""}</td>`
+     : `<td class="num">${f1(v)}${c.fq[i]?`<span class="fq">${c.fq[i]}</span>`:""}</td>`).join("");
+  const ytd = c.q.reduce((a,v)=>a+(v||0),0);
+  if(c.big){tot.q1+=c.q[0];tot.q2+=c.q[1];tot.ytd+=ytd;tot.y25+=c.y25;tot.g26+=c.g26;}
+  return `<tr><td><span class="co"><span class="sw" style="background:var(${c.c})"></span>${c.name}</span></td>${cells}<td class="num">${f1(ytd)}</td><td class="num">${c.y25l}</td><td class="num">${c.g26l}</td><td class="num">${c.e27l}</td></tr>`;
+}).join("") + `<tr class="total"><td>Big 4 (AMZN, MSFT, GOOGL, META)</td><td class="num">${f1(tot.q1)}</td><td class="num">${f1(tot.q2)}</td><td class="num">34.9<span class="fq">solo Meta</span></td><td class="num">${f1(tot.ytd)}</td><td class="num">${f1(tot.y25)}</td><td class="num">${tot.g26}</td><td class="num">≈975</td></tr>`;
+
+// cards
+document.getElementById("cards").innerHTML = C.map(c=>`
+ <article class="card">
+  <header><h3><span class="co"><span class="sw" style="background:var(${c.c})"></span>${c.name}</span></h3><span class="eyebrow">${c.big?"Big 4":c.id==="aapl"?"Referencia":"Hyperscaler"}</span></header>
+  <div class="ladder" aria-label="Evolución de la guía">${c.ladder.map(s=>`<span>${s}</span>`).join("<b>→</b>")}</div>
+  <dl>${c.dl.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+  <ul>${c.pts.map(p=>`<li>${p}</li>`).join("")}</ul>
+  <blockquote>${c.q27}</blockquote>
+ </article>`).join("");
+
+// sources
+const S = [
+ ["Amazon Q1 2026 8-K","https://www.sec.gov/Archives/edgar/data/0001018724/000101872426000012/amzn-20260331xex991.htm"],
+ ["Amazon Q2 2026 resultados","https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Second-Quarter-Results/"],
+ ["Amazon Q2 2026 transcript (Investing.com)","https://www.investing.com/news/transcripts/earnings-call-transcript-amazon-tops-q2-2026-estimates-as-aws-growth-accelerates-93CH-4826442"],
+ ["Amazon FY2025 8-K","https://www.sec.gov/Archives/edgar/data/1018724/000101872426000002/amzn-20251231xex991.htm"],
+ ["Amazon guía ≈US$200bn (DCD)","https://www.datacenterdynamics.com/en/news/amazon-capex-to-hit-200bn-in-2026-will-mostly-fund-aws-data-centers/"],
+ ["Citi: estimaciones 2027 Google/Meta/Amazon","https://uk.finance.yahoo.com/news/citi-sees-google-meta-amazon-103809176.html"],
+ ["Microsoft FY26 Q3 (IR)","https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3"],
+ ["Microsoft FY26 Q3 10-Q","https://www.sec.gov/Archives/edgar/data/0000789019/000119312526191507/msft-20260331.htm"],
+ ["Microsoft FY26 Q4 press release","https://microsoft.com/en-us/investor/earnings/fy-2026-q4/press-release-webcast"],
+ ["Microsoft FY26 Q4 transcript","https://microsoft.com/en-us/investor/earnings/FY-2026-Q4/Document/DownloadDocument/33/TranscriptFY26Q4.docx"],
+ ["Microsoft: fecha FY27 Q1","https://news.microsoft.com/source/2026/10/07/microsoft-announces-quarterly-earnings-release-date-69/"],
+ ["CFO Dive: Microsoft mantiene plan de capex","https://www.cfodive.com/news/microsoft-holds-line-ai-spending-plans/826648/"],
+ ["Microsoft capex trimestral (tracker)","https://www.regardsofwallstreet.com/data/capex/company/microsoft"],
+ ["Alphabet Q1 2026 transcript","https://s206.q4cdn.com/479360582/files/doc_events/2026/Apr/29/Alphabet-2026_Q1_Earnings_Transcript.pdf"],
+ ["Alphabet Q2 2026 transcript","https://s206.q4cdn.com/479360582/files/doc_events/2026/Jul/22/2026_Q2_Earnings_Transcript.pdf"],
+ ["Alphabet Q2 2026 8-K","https://www.sec.gov/Archives/edgar/data/0001652044/000165204426000066/googexhibit991q22026.htm"],
+ ["Alphabet FY2025 8-K","https://www.sec.gov/Archives/edgar/data/1652044/000165204426000012/googexhibit991q42025.htm"],
+ ["I/O Fund: consenso 2027 (MarketScreener)","https://io-fund.com/ai-stocks/ai-capex-1-trillion-estimates-too-low"],
+ ["Meta Q1 2026 resultados","https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/default.aspx"],
+ ["Meta Q2 2026 resultados","https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx"],
+ ["Meta Q3 2026 resultados","https://s21.q4cdn.com/399680738/files/doc_news/Meta-Reports-Third-Quarter-2026-Results-2026.pdf"],
+ ["Meta Q3 2026 10-Q","https://www.sec.gov/Archives/edgar/data/0001326801/000162828026066773/meta-20260930.htm"],
+ ["Meta Q4/FY2025 resultados","https://s21.q4cdn.com/399680738/files/doc_news/Meta-Reports-Fourth-Quarter-and-Full-Year-2025-Results-2026.pdf"],
+ ["Meta Q3 2026 transcript (Motley Fool)","https://www.fool.com/earnings/call-transcripts/2026/10/21/meta-meta-q3-2026-earnings-call-transcript/"],
+ ["Fortune: Meta Q3 2026","https://fortune.com/2026/10/21/meta-q3-earnings-mark-zuckerberg-capex-muse/"],
+ ["Wells Fargo sobre Meta 2027","https://finance.yahoo.com/video/wells-fargo-cuts-meta-price-002001458.html"],
+ ["Oracle Q1 FY27 press release","https://s23.q4cdn.com/440135859/files/content_files/1q27-pressrelease-September_FINAL.pdf"],
+ ["Oracle Q4 FY26 press release","https://s23.q4cdn.com/440135859/files/doc_earnings/2026/q4/earnings-result/4q26-pressrelease-final.pdf"],
+ ["Oracle Q1 FY27 transcript","https://www.tradingkey.com/news/transcripts/262162053-tradingkey"],
+ ["Yield Theory: capex Oracle 2026–2027","https://www.yieldtheory.app/research/oracle-capex-2026-2027"],
+ ["Alibaba trimestre de marzo 2026 (6-K)","https://www.sec.gov/Archives/edgar/data/1577552/000110465926060224/tm2614494d1_ex99-1.htm"],
+ ["Alibaba trimestre de junio 2026 (6-K)","https://www.sec.gov/Archives/edgar/data/1577552/000110465926099220/tm2623667d1_ex99-1.htm"],
+ ["BNN Bloomberg: Alibaba superará RMB 380bn","https://www.bnnbloomberg.ca/business/2026/05/13/alibaba-reports-continued-profit-squeeze-from-spending-on-ai-and-instant-retail/"],
+ ["Mingtiandi: colocación de Alibaba","https://www.mingtiandi.com/real-estate/data-centres/alibaba-raising-10-2b-for-ai-infrastructure-as-data-centre-push-accelerates/"],
+ ["Apple FY26 Q2 8-K","https://www.sec.gov/Archives/edgar/data/0000320193/000032019326000011/a8-kex991q2202603282026.htm"],
+ ["Apple FY26 Q3 estados financieros","https://www.apple.com/newsroom/pdfs/fy2026q3/FY26_Q3_Consolidated_Financial_Statements.pdf"],
+ ["Apple FY25 Q4 8-K","https://www.sec.gov/Archives/edgar/data/320193/000032019325000077/a8-kex991q4202509272025.htm"],
+ ["Apple: fecha FY26 Q4 (9to5Mac)","https://9to5mac.com/2026/10/06/apple-sets-q4-2026-earnings-release-for-november-2/"],
+ ["Goldman: consenso 2027 hyperscalers","https://finance.yahoo.com/sectors/technology/articles/goldman-says-consensus-2027-hyperscaler-140152065.html"]
+];
+document.getElementById("sources").innerHTML = S.map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${t} ↗</a></li>`).join("");
+
+// ---------- charts ----------
+const PROJ = { // trimestres 7 y 8 (Q3 26, Q4 26) implícitos en la guía
+  amzn:[61.9,61.9], msft:[50.0,52.1], googl:[59.7,59.7], meta:[null,54.2], orcl:[null,21.3]
+};
+const QL = ["Q1 25","Q2 25","Q3 25","Q4 25","Q1 26","Q2 26","Q3 26","Q4 26"];
+// meses desde ene-2025 (1 = ene 25)
+const MES = ["dic","ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov"];
+const mlab = v => `${MES[((v%12)+12)%12]} ${v>12?"26":"25"}`;
+const TR = {
+ amzn:{ql:QL, note:"Trimestres en compras brutas de PP&E; la proyección reparte la guía neta de ≈US$220bn.",
+   guide:{series:[{label:"Guía 2026",pts:[[14,200],[19,220]]}], base:128.3, baseL:"2025 real (neto)", x:[13,22]},
+   txt:"Subió la guía de ≈US$200bn a ≈US$220bn en julio, sobre todo por el costo de la memoria."},
+ msft:{ql:["Q1 25","Q2 25","Q3 25","Q4 25","Q1 26","Q2 26","Q3 26","Q4 26"], note:"Capex incl. arrendamientos financieros, por trimestre calendario.",
+   guide:{series:[{label:"Guía CY2026",pts:[[16,190],[19,175]]}], base:118.0, baseL:"2025 real", x:[13,22]},
+   txt:"La baja de US$190bn a ≈US$175bn en julio es contable (los arrendamientos pasan a operativos); el gasto planeado no cambió."},
+ googl:{ql:QL, note:"Compras de PP&E.",
+   guide:{series:[{label:"Guía 2026",pts:[[14,180,175,185],[16,185,180,190],[19,200,195,205]]}], base:91.4, baseL:"2025 real", x:[13,22]},
+   txt:"Tres alzas en el año: de US$175–185bn a US$195–205bn. Ya adelantó que 2027 subirá \"significativamente\"."},
+ meta:{ql:QL, note:"Capex incl. principal de arrendamientos financieros.",
+   guide:{series:[{label:"Guía 2026",pts:[[13,125,115,135],[16,135,125,145],[19,137.5,130,145],[22,140,135,145]]}], base:72.2, baseL:"2025 real", x:[12,23]},
+   txt:"Cuatro ajustes: el rango se movió hacia arriba y se fue cerrando, de US$115–135bn a US$135–145bn."},
+ orcl:{ql:["dic–feb 25","mar–may 25","jun–ago 25","sep–nov 25","dic–feb 26","mar–may 26","jun–ago 26","sep–nov 26"], note:"Trimestres fiscales de Oracle; proyección = resto de la guía FY27 repartido en 3 trimestres.",
+   guide:{series:[{label:"Guía FY26",pts:[[6,25],[9,35],[12,50],[15,50]],end:[18,55.7,"FY26 real"]},{label:"Guía FY27",pts:[[18,92.5,90,95],[21,92.5,90,95]]}], x:[5,22]},
+   txt:"La guía FY26 se duplicó en el año (de >US$25bn a US$55.7bn reales) y la de FY27 es de US$90–95bn."},
+ baba:{ql:["ene–mar 25","abr–jun 25","jul–sep 25","oct–dic 25","ene–mar 26","abr–jun 26","jul–sep 26","oct–dic 26"], note:"US$ al tipo de cambio de cada reporte.",
+   cum:{labels:["mar 25","jun 25","sep 25","dic 25","mar 26","jun 26"], vals:[0,38.7,70.2,99.2,126.1,193.7], target:380},
+   txt:"Lleva ≈RMB 194bn invertidos desde abril 2025, la mitad de su compromiso de RMB 380bn, y ya dijo que lo superará."},
+ aapl:{ql:["ene–mar 25","abr–jun 25","jul–sep 25","oct–dic 25","ene–mar 26","abr–jun 26","jul–sep 26","oct–dic 26"], note:"Trimestres derivados de acumulados fiscales.",
+   ytd:{labels:["Q1","Q2","Q3","Q4"], fy25:[2.94,6.01,9.47,12.72], fy26:[2.37,4.34,6.80,null]},
+   txt:"Gasta menos que el año pasado: su acumulado FY26 va 28% abajo de FY25."}
+};
+
+const charts=[]; let mode="big";
+function mk(el,cfg){const ch=new Chart(el,cfg);charts.push(ch);return ch;}
+function hexA(h,a){h=h.replace('#','');const n=parseInt(h,16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+function base(yt){
+  const mu=css("--muted"), ln=css("--line"), fg=css("--fg");
+  return {responsive:true,maintainAspectRatio:false,interaction:{mode:"nearest",intersect:false},
+   plugins:{legend:{display:false},tooltip:{filter:x=>x.raw!=null&&!x.dataset._hide,callbacks:{label:x=>`${x.dataset.label}: US$${(x.parsed.y).toFixed(1)}bn`}}},
+   scales:{x:{grid:{display:false},ticks:{color:mu,maxRotation:0,autoSkip:true}},
+           y:{beginAtZero:true,grid:{color:ln},ticks:{color:mu,callback:v=>"$"+v},title:{display:!!yt,text:yt,color:mu}}}};
+}
+// actual + dashed projection
+function qSets(c,showLabel){
+  const col=css(c.c);
+  const act=[...c.q25,...(c.qc||c.q),null].slice(0,8);
+  const p=PROJ[c.id]; const proj=Array(8).fill(null);
+  if(p){ let last=-1; act.forEach((v,i)=>{if(v!=null)last=i}); proj[last]=act[last];
+    [6,7].forEach((i,k)=>{ if(p[k]!=null && i>last) proj[i]=p[k]; });
+    if(proj.filter(v=>v!=null).length<2) proj.fill(null); }
+  return [
+   {label:c.name,data:act,borderColor:col,backgroundColor:col,borderWidth:2.5,pointRadius:3,pointStyle:c.ps||"circle",tension:.25,spanGaps:false},
+   {label:c.name+" (proyección)",data:proj,borderColor:col,backgroundColor:col,borderDash:[6,5],borderWidth:2,pointRadius:3,pointStyle:c.ps||"circle",pointBackgroundColor:css("--surface"),tension:.25,_proj:true}
+  ];
+}
+const PS={amzn:"circle",msft:"rect",googl:"triangle",meta:"rectRot",orcl:"crossRot",baba:"star",aapl:"line"};
+C.forEach(c=>c.ps=PS[c.id]);
+
+function draw(){
+  if(!window.Chart) return;
+  charts.splice(0).forEach(ch=>ch.destroy());
+  Chart.defaults.font.family = css("--body"); Chart.defaults.color = css("--muted");
+  const fg=css("--fg"), mu=css("--muted");
+  // 1) quarterly combined
+  const set=C.filter(c=> mode==="all" ? true : (c.big||c.mid));
+  const o1=base("US$ bn por trimestre");
+  o1.plugins.legend={display:true,position:"bottom",labels:{color:fg,usePointStyle:true,boxWidth:10,filter:i=>!i.text.includes("(proyección)")}};
+  mk(document.getElementById("cq"),{type:"line",data:{labels:QL,datasets:set.flatMap(c=>qSets(c))},options:o1});
+  // 2) annual trajectory
+  const ys=C.filter(c=>c.big||c.mid);
+  const o2=base("US$ bn por año");
+  o2.plugins.legend={display:true,position:"bottom",labels:{color:fg,usePointStyle:true,boxWidth:10,filter:i=>!i.text.includes("(guía)")}};
+  mk(document.getElementById("cy"),{type:"line",data:{labels:["2025 real","2026 guía","2027 estimado"],
+    datasets:ys.flatMap(c=>{const col=css(c.c);return[
+      {label:c.name,data:[c.y25,null,null],borderColor:col,backgroundColor:col,pointStyle:c.ps,pointRadius:5,borderWidth:2.5},
+      {label:c.name+" (guía)",data:[c.y25,c.g26,c.e27],borderColor:col,backgroundColor:col,borderDash:[6,5],borderWidth:2.5,pointStyle:c.ps,pointRadius:5,_hide:false}
+    ]})},options:o2});
+  // 3) per company
+  C.forEach(c=>{
+    const t=TR[c.id], col=css(c.c);
+    // a) quarterly
+    const oa=base(); 
+    mk(document.getElementById("qa-"+c.id),{type:"line",data:{labels:t.ql,datasets:qSets(c)},options:oa});
+    // b) guidance / cumulative
+    const el=document.getElementById("qb-"+c.id);
+    if(t.guide){
+      const g=t.guide, ds=[];
+      g.series.forEach((s,si)=>{
+        const sc = si===0 ? col : col;
+        const pts = s.end ? s.pts : [...s.pts, [22, ...s.pts[s.pts.length-1].slice(1), "ext"]];
+        s = {...s, pts};
+        if(s.pts.some(p=>p.length>2)){
+          ds.push({label:s.label+" alto",data:s.pts.map(p=>({x:p[0],y:p[3]})),borderColor:"transparent",pointRadius:0,fill:false,_hide:true,stepped:"after"});
+          ds.push({label:s.label+" bajo",data:s.pts.map(p=>({x:p[0],y:p[2]})),borderColor:"transparent",backgroundColor:hexA(col,.18),pointRadius:0,fill:"-1",_hide:true,stepped:"after"});
+        }
+        ds.push({label:s.label,data:s.pts.map(p=>({x:p[0],y:p[1]})),borderColor:sc,backgroundColor:sc,borderWidth:2.5,pointRadius:s.pts.map(p=>p[p.length-1]==="ext"?0:4),pointStyle:c.ps,stepped:"after"});
+        if(s.end) ds.push({label:s.end[2],data:[{x:s.pts[s.pts.length-1][0],y:s.pts[s.pts.length-1][1]},{x:s.end[0],y:s.end[1]}],borderColor:sc,borderDash:[6,5],borderWidth:2,pointRadius:[0,5],pointStyle:"circle",backgroundColor:sc});
+      });
+      if(g.base!=null) ds.push({label:g.baseL,data:[{x:g.x[0],y:g.base},{x:g.x[1],y:g.base}],borderColor:mu,borderDash:[3,4],borderWidth:1.5,pointRadius:0});
+      const tv=[...new Set(g.series.flatMap(s=>s.pts.map(p=>p[0])).concat(g.series.filter(s=>s.end).map(s=>s.end[0])))].sort((a,b)=>a-b);
+      const ob=base(); ob.scales.y.beginAtZero=false; ob.scales.y.grace="8%";
+      ob.scales.x={type:"linear",min:g.x[0],max:g.x[1],grid:{display:false},afterBuildTicks:a=>{a.ticks=tv.map(v=>({value:v}))},ticks:{color:mu,callback:mlab,autoSkip:false}};
+      ob.plugins.tooltip.callbacks.title=x=>x.length?mlab(x[0].parsed.x):"";
+      ob.plugins.legend={display:true,position:"bottom",labels:{color:fg,boxWidth:10,filter:i=>!/ alto| bajo/.test(i.text)}};
+      mk(el,{type:"line",data:{datasets:ds},options:ob});
+    } else if(t.cum){
+      const ob=base("RMB bn acumulados");
+      ob.plugins.tooltip.callbacks.label=x=>`${x.dataset.label}: RMB ${x.parsed.y.toFixed(1)}bn`;
+      ob.scales.y.ticks.callback=v=>v; ob.scales.y.max=400;
+      ob.plugins.legend={display:true,position:"bottom",labels:{color:fg,boxWidth:10}};
+      mk(el,{type:"line",data:{labels:t.cum.labels,datasets:[
+        {label:"Capex acumulado desde abr 25",data:t.cum.vals,borderColor:col,backgroundColor:hexA(col,.15),fill:true,borderWidth:2.5,pointRadius:4,pointStyle:c.ps,tension:.2},
+        {label:"Compromiso RMB 380bn (2025–27)",data:t.cum.labels.map(()=>t.cum.target),borderColor:mu,borderDash:[3,4],borderWidth:1.5,pointRadius:0}]},options:ob});
+    } else if(t.ytd){
+      const ob=base(); ob.plugins.legend={display:true,position:"bottom",labels:{color:fg,boxWidth:10}};
+      mk(el,{type:"line",data:{labels:t.ytd.labels,datasets:[
+        {label:"FY26 acumulado",data:t.ytd.fy26,borderColor:col,backgroundColor:col,borderWidth:2.5,pointRadius:4},
+        {label:"FY25 acumulado",data:t.ytd.fy25,borderColor:mu,borderDash:[6,5],borderWidth:2,pointRadius:3,backgroundColor:mu}]},options:ob});
+    }
+  });
+}
+// build per-company rows
+document.getElementById("traj").innerHTML = C.map(c=>{
+  const t=TR[c.id];
+  const right = t.guide ? "Cómo se movió la guía" : t.cum ? "Avance vs compromiso a 3 años" : "Acumulado del año fiscal vs año anterior";
+  return `<div class="trow">
+   <div class="trow-h"><h3><span class="co"><span class="sw" style="background:var(${c.c})"></span>${c.name}</span></h3><p>${t.txt}</p></div>
+   <div class="pair">
+    <figure><figcaption>Gasto trimestral · US$ bn</figcaption><div class="box"><canvas id="qa-${c.id}" aria-label="Capex trimestral de ${c.name}"></canvas></div><span class="note">${t.note}</span></figure>
+    <figure><figcaption>${right}</figcaption><div class="box"><canvas id="qb-${c.id}" aria-label="${right} de ${c.name}"></canvas></div></figure>
+   </div></div>`;
+}).join("");
+
+function setMode(m){mode=m;document.getElementById("t-big").setAttribute("aria-pressed",m==="big");document.getElementById("t-all").setAttribute("aria-pressed",m==="all");draw();}
+document.getElementById("t-big").onclick=()=>setMode("big");
+document.getElementById("t-all").onclick=()=>setMode("all");
+draw();
+const mq = matchMedia("(prefers-color-scheme: dark)");
+mq.addEventListener && mq.addEventListener("change",draw);
+new MutationObserver(draw).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+</script>
+</body>
+</html>
